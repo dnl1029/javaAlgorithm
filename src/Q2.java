@@ -1,5 +1,9 @@
 import java.util.Arrays;
+import java.util.List;
+import java.util.OptionalDouble;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 public class Q2 {
     public static void main(String[] args) {
@@ -17,12 +21,14 @@ public class Q2 {
         for (int i=0;i<N;i++) {
             intarr[i] = sc.nextInt();
         }
-        long sum = 0;
-        long max = 0;
-        max = Long.valueOf(Arrays.stream(intarr).max().getAsInt());
-        //ArrayList e = Arrays.stream(intarr).map(i -> (i / max) * 100).collect(Collectors.toList());
+        int max = Arrays.stream(intarr).max().getAsInt();
         System.out.println("max : "+max);
-        Arrays.stream(intarr).map(i->i/max * 100).average();
+
+        //list.stream().map(i -> (i / max) * 100).forEach(f -> System.out.println("list : "+f));
+        Arrays.stream(intarr).map(i->i*100).forEach(f->System.out.println("longarr : "+f));
+        OptionalDouble average = Arrays.stream(intarr).map(i -> i * 100).average();
+        Double newaverage = average.getAsDouble()/max;
+        System.out.println("newaverage : "+newaverage);
 
     }
 }
