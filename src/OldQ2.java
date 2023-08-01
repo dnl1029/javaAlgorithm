@@ -1,11 +1,8 @@
 import java.util.Arrays;
-import java.util.List;
 import java.util.OptionalDouble;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
 
-public class Q2 {
+public class OldQ2 {
     public static void main(String[] args) {
         /**
          * 점수 x의 최대값이 M 일때, 수정된 점수는 (x/M)*100. 이때 평균 구하기

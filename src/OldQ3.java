@@ -1,12 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.OptionalDouble;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class Q3 {
+public class OldQ3 {
 
     public static void main(String[] args) throws IOException {
         /**
