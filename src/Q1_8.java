@@ -13,20 +13,39 @@ public class Q1_8 {
      * 출력
      * 첫 번째 줄에 팰린드롬인지의 결과를 YES 또는 NO로 출력합니다.
      * 예시 입력 1
-     * found7, time: study; Yduts; emit, 7Dnuof
+     * found7,time:study;Yduts;emit,7Dnuof
      * 예시 출력 1
      * YES
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str) {
+        String answer = "";
+        String tempstr ="";
+        char[] tempChars = str.toCharArray();
+        for(char x:tempChars) {
+            if(Character.isAlphabetic(x)){
+                tempstr += x;
+            }
+        }
+        String upperStr = tempstr.toUpperCase();
+        StringBuffer stringBuffer = new StringBuffer(upperStr);
+        String reverse = stringBuffer.reverse().toString();
+        if(reverse.equals(upperStr)){
+            answer = "YES";
+        }
+        else {
+            answer = "NO";
+        }
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q1_8 main = new Q1_8();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        String strTemp = sc.nextLine();
+        //공백제거
+        String str = strTemp.replace(" ", "");
+        System.out.println(main.solution(str));
     }
 
 }

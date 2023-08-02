@@ -17,15 +17,41 @@ public class Q1_9 {
      * 208
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str) {
+        String answer = "";
+        String tempAnswer = "";
+
+        char[] originChars = str.toCharArray();
+        for(char x:originChars) {
+            if(Character.isDigit(x)){
+                tempAnswer += x;
+            }
+        }
+
+        //Integer.parseInt(str)쓰면 앞에 string에서 앞에 0 없애준다.
+        int i = Integer.parseInt(tempAnswer);
+        answer = String.valueOf(i);
+
+
+//        char[] tempChars = tempAnswer.toCharArray();
+//        int index =0;
+//        for(int i=0;i<tempAnswer.length();i++){
+//            if(tempChars[i] != '0'){
+//                index = i;
+//                break;
+//            }
+//        }
+//        //substring(2)는 인덱스2부터 끝까지 리턴, substring(2,4)는 2~3까지 리턴
+//        answer = tempAnswer.substring(index);
+
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q1_9 main = new Q1_9();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        String str = sc.next();
+        System.out.println(main.solution(str));
     }
 
 }

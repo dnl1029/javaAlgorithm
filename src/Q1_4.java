@@ -22,15 +22,29 @@ public class Q1_4 {
      * giB
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
-        return answer;
+    public void solution(String[] strings) {
+//        int answer = 0;
+
+        //StringBuffer로 string 뒤집기 가능
+        for(String x : strings){
+            StringBuffer stringBuffer = new StringBuffer(x);
+            String reverse = stringBuffer.reverse().toString();
+            System.out.println(reverse);
+        }
+
+//        return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q1_4 main = new Q1_4();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        int N = sc.nextInt();
+        String[] strings = new String[N];
+        for(int i=0;i<N;i++){
+            strings[i] = sc.next();
+        }
+        main.solution(strings);
+//        System.out.println();
     }
 
 }

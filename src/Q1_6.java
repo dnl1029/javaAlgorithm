@@ -1,3 +1,4 @@
+import java.util.LinkedHashSet;
 import java.util.Scanner;
 
 public class Q1_6 {
@@ -16,15 +17,27 @@ public class Q1_6 {
      * kset
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str) {
+        String answer = "";
+
+        char[] chars = str.toCharArray();
+        LinkedHashSet<Character> set = new LinkedHashSet<>();
+        for(char x:chars){
+            set.add(x);
+        }
+
+        for(char y:set){
+            answer+=y;
+        }
+
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q1_6 main = new Q1_6();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        String str = sc.next();
+        System.out.println(main.solution(str));
     }
 
 }

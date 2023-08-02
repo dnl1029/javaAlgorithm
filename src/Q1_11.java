@@ -1,4 +1,8 @@
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Q1_11 {
 
@@ -21,15 +25,108 @@ public class Q1_11 {
      * KST3SE2KFK3DJ2G2
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str) {
+        String answer = "";
+
+        /**
+         * 중요. 다짜고짜 str.toCharArray()하면 복잡해질수 있으니
+         * string.charAt(i) for문 만으로 해결 가능하면 이걸로 하기
+         */
+        String newstr = str;
+        String newanswer = "";
+
+        int newcount = 1;
+        for(int i=0; i<newstr.length();i++){
+            if(i==newstr.length()-1) {
+                if(newstr.charAt(i) == newstr.charAt(i-1)){
+                    newanswer += newstr.charAt(i);
+                    newanswer += String.valueOf(newcount);
+                    break;
+                }
+                else {
+                    newanswer += newstr.charAt(i);
+                    break;
+                }
+            }
+            if(newstr.charAt(i)==newstr.charAt(i+1)){
+                newcount++;
+            }
+            else {
+                newanswer += newstr.charAt(i);
+                if(newcount >1) {
+                    newanswer += String.valueOf(newcount);
+                    newcount = 1;
+                }
+            }
+        }
+
+        System.out.println("newanswer " + newanswer);
+
+
+
+
+        char[] orgChars = str.toCharArray();
+        LinkedHashSet<Character> charSet = new LinkedHashSet<>();
+        for(char x : orgChars) {
+            charSet.add(x);
+        }
+        //char 배열 stream 하는법
+        //Stream<Character> characterStream = new String(orgChars).chars().mapToObj(c->(char)c);
+
+        //string을 그냥 바로 char stream 하는법
+        //str.chars().filter(f->f=='k').count();
+
+        //아래는 전체 개수 구하는 방법.
+        LinkedHashMap<String,String> hashMap = new LinkedHashMap<>();
+        for(char x : charSet) {
+            long count = str.chars().filter(f -> f == x).count();
+            if(count==1){
+                hashMap.put(String.valueOf(x),"");
+            }
+            else {
+                hashMap.put(String.valueOf(x),String.valueOf(count));
+            }
+        }
+
+        LinkedHashMap<String,String> hashMap2 = new LinkedHashMap<>();
+        int count=1;
+        for(int i=0;i<str.length();i++) {
+            if(i==str.length()-1){
+                if(orgChars[i] == orgChars[i-1]) {
+                    hashMap2.put(String.valueOf(orgChars[i]),String.valueOf(count));
+                    answer += hashMap2.entrySet().stream().map(j->j.getKey() + j.getValue()).collect(Collectors.joining());
+                    hashMap2.clear();
+                    break;
+                }
+                hashMap2.put(String.valueOf(orgChars[i]),"");
+                answer += hashMap2.entrySet().stream().map(j->j.getKey() + j.getValue()).collect(Collectors.joining());
+                hashMap2.clear();
+                break;
+            }
+            else if(orgChars[i]==orgChars[i+1]) {
+                count++;
+            }
+            else {
+                hashMap2.put(String.valueOf(orgChars[i]),String.valueOf(count));
+                count=1;
+                if(hashMap2.get(String.valueOf(orgChars[i])).equals("1")){
+                    hashMap2.replace(String.valueOf(orgChars[i]),"");
+                }
+                answer += hashMap2.entrySet().stream().map(j->j.getKey() + j.getValue()).collect(Collectors.joining());
+                hashMap2.clear();
+            }
+        }
+
+        String anotheranswer = hashMap.entrySet().stream().map(i -> i.getKey() + i.getValue()).collect(Collectors.joining());
+
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q1_11 main = new Q1_11();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        String str = sc.next();
+        System.out.println(main.solution(str));
     }
 
 }

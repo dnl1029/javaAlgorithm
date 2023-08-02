@@ -16,15 +16,40 @@ public class Q1_5 {
      * S#T!EG*b@a
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str) {
+        String answer = "";
+
+        char[] chars = str.toCharArray();
+        int frontIndex = 0;
+        int endIndex = str.length()-1;
+
+        while(frontIndex < endIndex) {
+            if(!Character.isAlphabetic(chars[frontIndex])) {
+                frontIndex++;
+            }
+            else if(!Character.isAlphabetic(chars[endIndex])) {
+                endIndex--;
+            }
+            else {
+                char temp = chars[frontIndex];
+                chars[frontIndex] = chars[endIndex];
+                chars[endIndex] = temp;
+                frontIndex++;
+                endIndex--;
+            }
+        }
+
+        for(int i=0;i<str.length();i++){
+            answer += chars[i];
+        }
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q1_5 main = new Q1_5();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        String str = sc.next();
+        System.out.println(main.solution(str));
     }
 
 }
