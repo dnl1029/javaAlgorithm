@@ -42,15 +42,53 @@ public class Q2_3 {
      * D
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String strA, String strB,int N) {
+        String answer = "";
+
+        String newStrA = strA.replace(" ", "");
+        String newStrB = strB.replace(" ", "");
+
+        String temp = "";
+        for (int i=0;i<N;i++) {
+            if(newStrA.charAt(i)==newStrB.charAt(i)) {
+                temp +='D';
+            }
+            else if(newStrA.charAt(i)=='1') {
+                if(newStrB.charAt(i)=='2') {
+                    temp +='B';
+                }
+                else {
+                    temp +='A';
+                }
+            }
+            else if(newStrA.charAt(i)=='2') {
+                if(newStrB.charAt(i)=='1') {
+                    temp +='A';
+                }
+                else {
+                    temp +='B';
+                }
+            }
+            else if(newStrA.charAt(i)=='3') {
+                if(newStrB.charAt(i)=='1') {
+                    temp +='B';
+                }
+                else {
+                    temp +='A';
+                }
+            }
+        }
+        temp.chars().mapToObj(j->(char)j).forEach(i-> System.out.println(i));
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q2_3 main = new Q2_3();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        int N = Integer.parseInt(sc.nextLine());
+        String strA = sc.nextLine();
+        String strB = sc.nextLine();
+        System.out.println(main.solution(strA,strB,N));
     }
 
 }

@@ -42,15 +42,53 @@ public class Q2_7 {
      * 힌트 출처 : 한국정보올림피아드
      */
 
-    public int solution(String str, char t) {
+    public int solution(String str, int N) {
         int answer = 0;
+
+        String[] strarr = str.split(" ");
+        int count=0;
+        for(int i=0; i<N;i++) {
+            if(strarr[i].equals("1")) {
+                count++;
+                answer+=count;
+            }
+            else {
+                count = 0;
+            }
+        }
+
+
+
+        //내가 복잡하게 푼듯
+//        for (int i=0;i<N-1;i++) {
+//            if(i==0 && strarr[0].equals("1")) {
+//                answer += 1;
+//                count++;
+//            }
+//            else if(i==0 && strarr[0].equals("0")) {}
+//            else if(strarr[i].equals("1")) {
+//                if(strarr[i+1].equals("1")) {
+//                    answer +=count;
+//                    count++;
+//                }
+//                else if(strarr[i+1].equals("0")) {
+//                    answer += count;
+//                    count = 0;
+//                }
+//            }
+//            else if(strarr[i].equals("0")) {
+//                count =1;
+//            }
+//        }
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q2_7 main = new Q2_7();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        int N = Integer.parseInt(sc.nextLine());
+        String str = sc.nextLine();
+        System.out.println(main.solution(str,N));
     }
 
 }

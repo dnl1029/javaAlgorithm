@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Q2_10 {
@@ -39,15 +40,35 @@ public class Q2_10 {
      * 10
      */
 
-    public int solution(String str, char t) {
+    public int solution(int[][] intarr,int N) {
         int answer = 0;
+
+        for(int i=1;i<N-1;i++) {
+            for(int j=1;j<N-1;j++) {
+                if(intarr[i][j] > intarr[i][j+1] &&
+                        intarr[i][j] > intarr[i][j-1] &&
+                        intarr[i][j] > intarr[i+1][j] &&
+                        intarr[i][j] > intarr[i-1][j]
+                ) {
+                    answer++;
+                }
+            }
+        }
+
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q2_10 main = new Q2_10();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        int N = Integer.parseInt(sc.nextLine())+2;
+        int[][] intarr = new int[N][N];
+        for (int i=1;i<N-1;i++) {
+            String str = sc.nextLine();
+            String newStr = "0 " + str+ " 0";
+            intarr[i] = Arrays.stream(newStr.split(" ")).mapToInt(j->Integer.parseInt(j)).toArray();
+        }
+        System.out.println(main.solution(intarr,N));
     }
 
 }

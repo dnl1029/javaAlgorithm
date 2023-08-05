@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Q3_6 {
@@ -37,15 +38,38 @@ public class Q3_6 {
      * 8
      */
 
-    public int solution(String str, char t) {
+    public int solution(String str1, String str2) {
         int answer = 0;
+
+        String[] strarr1 = str1.split(" ");
+        int N = Integer.parseInt(strarr1[0]);
+        int M = Integer.parseInt(strarr1[1]);
+
+        String[] strarr = str2.split(" ");
+        int[] intarr = Arrays.stream(strarr).mapToInt(i -> Integer.parseInt(i)).toArray();
+        int count=0;
+        int x=0;
+        for(int i=0; i<N; i++) {
+            if(intarr[i]==0) {
+                //intarr[i]=1;
+                count++;
+            }
+            while(count>M) {
+                if(intarr[x]==0) count--;
+                x++;
+            }
+            answer=Math.max(answer, i-x+1);
+        }
+
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q3_6 main = new Q3_6();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        String str1 = sc.nextLine();
+        String str2 = sc.nextLine();
+        System.out.println(main.solution(str1,str2));
     }
 
 }

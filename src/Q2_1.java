@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Q2_1 {
 
@@ -27,15 +30,35 @@ public class Q2_1 {
      * 7 9 6 12
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str, int N) {
+        String answer = "";
+
+        String[] strarr = str.split(" ");
+        //stream을 배열로 변환하려면 .toArray()
+        int[] intarr = Arrays.stream(strarr).mapToInt(i -> Integer.parseInt(i)).toArray();
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i=0;i<N;i++) {
+            if(i==0) {
+                list.add(intarr[i]);
+            }
+            else if(intarr[i-1] < intarr[i]){
+                list.add(intarr[i]);
+            }
+        }
+
+        //Integer -> String은 .map 사용후 i.toString
+        //int ->String은 .maptoObj 사용후 String.valueof(i) 사용
+        answer = list.stream().map(i -> i.toString() + " ").collect(Collectors.joining());
+
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q2_1 main = new Q2_1();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        int N = Integer.parseInt(sc.nextLine());
+        String str = sc.nextLine();
+        System.out.println(main.solution(str,N));
     }
 
 }

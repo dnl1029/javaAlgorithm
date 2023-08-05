@@ -31,15 +31,43 @@ public class Q2_6 {
      * 23 2 73 2 3
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str, int N) {
+        String answer = "";
+
+        String[] strarr = str.split(" ");
+        for(int i=0;i<N;i++) {
+            StringBuffer stringBuffer = new StringBuffer(strarr[i]);
+            String tempStr = stringBuffer.reverse().toString();
+            boolean sosu = Q2_6.sosu(Integer.parseInt(tempStr));
+
+            if(sosu==true) {
+                answer+= String.valueOf(Integer.parseInt(tempStr));
+                answer+=" ";
+            }
+        }
+        answer.trim();
+        return answer;
+    }
+    public static boolean sosu(int N) {
+        boolean answer = false;
+        for(int j=2;j<=N;j++){
+            if(N != j && N%j ==0) {
+                break;
+            }
+            if(N==j) {
+                answer = true;
+            }
+        }
         return answer;
     }
 
+
     public static void main(String[] args) {
-        Main main = new Main();
+        Q2_6 main = new Q2_6();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        int N = Integer.parseInt(sc.nextLine());
+        String str = sc.nextLine();
+        System.out.println(main.solution(str,N));
     }
 
 }

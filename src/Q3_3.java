@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.OptionalInt;
 import java.util.Scanner;
 
 public class Q3_3 {
@@ -35,15 +37,30 @@ public class Q3_3 {
      * 56
      */
 
-    public int solution(String str, char t) {
+    public int solution(String str1, String str2) {
         int answer = 0;
+
+        String[] strarr1 = str1.split(" ");
+        String[] strarr2 = str2.split(" ");
+        int[] intarr = Arrays.stream(strarr2).mapToInt(i -> Integer.parseInt(i)).toArray();
+        int num = Integer.parseInt(strarr1[0]);
+        int x = Integer.parseInt(strarr1[1]);
+
+        int[] newintarr = new int[num-x+1];
+        for(int i=0;i<num-x+1;i++) {
+            newintarr[i] = intarr[i] + intarr[i+1]+ intarr[i+2];
+        }
+        OptionalInt max = Arrays.stream(newintarr).max();
+        answer = max.getAsInt();
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q3_3 main = new Q3_3();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        String str1 = sc.nextLine();
+        String str2 = sc.nextLine();
+        System.out.println(main.solution(str1,str2));
     }
 
 }

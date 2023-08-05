@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Q2_11 {
@@ -56,15 +57,39 @@ public class Q2_11 {
      * 힌트
      */
 
-    public int solution(String str, char t) {
+    public int solution(int[][] intarr, int N) {
         int answer = 0;
+        int count = 0;
+        int max = 0;
+
+        for(int i=0;i<N;i++) {
+            for(int j=0;j<N;j++) {
+                //i=0,j==0이라 가정
+                for(int k=0;k<N;k++) {
+                    if(j!=k && intarr[i][j] == intarr[i][k]) {
+                        count++;
+                        break;
+                    }
+                }
+            }
+            if(max<count) {
+                max = count;
+            }
+            count =0;
+        }
+        answer = max;
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q2_11 main = new Q2_11();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        int N = Integer.parseInt(sc.nextLine());
+        int[][] intarr = new int[N][N];
+        for(int i=0;i<N;i++) {
+            intarr[i] = Arrays.stream(sc.nextLine().split(" ")).mapToInt(j->Integer.parseInt(j)).toArray();
+        }
+        System.out.println(main.solution(intarr,N));
     }
 
 }

@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Scanner;
 
 public class Q4_1 {
@@ -33,15 +36,31 @@ public class Q4_1 {
      * C
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str, int N) {
+        String answer = "";
+
+        HashMap<Character,Integer> map = new HashMap<>();
+        for(int i=0;i<N;i++) {
+            map.put(str.charAt(i),map.getOrDefault(str.charAt(i),0)+1);
+        }
+        //map을 stream 하는법
+        OptionalInt max = map.entrySet().stream().mapToInt(j->j.getValue().intValue()).max();
+        for(int i=0;i<N;i++) {
+            if(map.get(str.charAt(i)) == max.getAsInt()) {
+                answer+= str.charAt(i);
+                break;
+            }
+        }
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q4_1 main = new Q4_1();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        HashMap<String, Integer> map = new HashMap<>();
+        int N = Integer.parseInt(sc.nextLine());
+        String str = sc.nextLine();
+        System.out.println(main.solution(str,N));
     }
 
 }

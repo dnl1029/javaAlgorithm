@@ -34,15 +34,37 @@ public class Q3_5 {
      * 3
      */
 
-    public int solution(String str, char t) {
+    public int solution(int N) {
         int answer = 0;
+
+        int cnt = (int)Math.ceil((double) N/2);
+        int[] intarr = new int[cnt];
+        for(int i=0;i<cnt;i++) {
+            intarr[i] = i+1;
+        }
+        int x=0;
+        int sum=0;
+
+        for(int i=0;i<cnt;i++) {
+            sum += intarr[i];
+            if(sum==N) {
+                answer++;
+            }
+            while (sum >= N) {
+                sum -= intarr[x++];
+                if(sum==N) {
+                    answer++;
+                }
+            }
+        }
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q3_5 main = new Q3_5();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        int N = sc.nextInt();
+        System.out.println(main.solution(N));
     }
 
 }

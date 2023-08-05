@@ -39,10 +39,34 @@ public class Q1_12 {
 
     public String solution(String str, int N) {
         String answer = "";
-        
-        String substring1 = str.substring(0, 7);
+        String[] stringarr = new String[N];
+        String tempStr = str;
 
+        for(int i=0;i<N;i++) {
+            stringarr[i] = tempStr.substring(0, 7);
+            tempStr = tempStr.substring(7);
+        }
 
+        //string 바로 stream 하는법
+        //str.chars.filter(f->f=='K')
+        for(String x:stringarr) {
+            String tempx = "";
+            for(int i=0; i<x.length();i++) {
+                if(x.charAt(i)=='#') {
+                    tempx += '1';
+                }
+                else {
+                    tempx += '0';
+                }
+            }
+            x = tempx;
+            //Integer.parseInt("1010",2) 하면, 10진수 int값으로 변환된다.
+            //str.chars()는 intstream이므로, str.chars().maptoObj(i->(char)i) 이렇게 해야함.
+            int intx = Integer.parseInt(x, 2);
+            //(char) int하면 10진수 int를 알파벳으로 변환함.
+            char alphabet = (char)intx;
+            answer += alphabet;
+        }
         return answer;
     }
 

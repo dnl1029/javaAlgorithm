@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Q2_8 {
@@ -29,15 +30,31 @@ public class Q2_8 {
      * 4 3 2 1 5
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str, int N) {
+        String answer = "";
+
+        String[] strarr = str.split(" ");
+        int[] intarr = Arrays.stream(strarr).mapToInt(i -> Integer.parseInt(i)).toArray();
+
+        for(int i=0;i<N;i++) {
+            int count =1;
+            for(int j=0;j<N;j++) {
+                if(intarr[i]<intarr[j]) {
+                    count++;
+                }
+            }
+            answer += String.valueOf(count) + " ";
+            answer.trim();
+        }
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q2_8 main = new Q2_8();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        int N = Integer.parseInt(sc.nextLine());
+        String str = sc.nextLine();
+        System.out.println(main.solution(str,N));
     }
 
 }

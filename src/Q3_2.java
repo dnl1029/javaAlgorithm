@@ -1,4 +1,7 @@
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Q3_2 {
 
@@ -35,15 +38,60 @@ public class Q3_2 {
      * 2 3 5
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(int N, String strN, int M, String strM) {
+        String answer = "";
+
+        //주의 set에 add하는 행동은 map이 아니라 foreach에 짜야함
+        //아래는 or 조건으로 합치는 방법
+        //String str= strN + " "+ strM;
+        // set을 stream으로 해서 add하면됨. 코드는 생략
+
+        String[] strarr1 = strN.split(" ");
+        String[] strarr2 = strM.split(" ");
+        HashSet<Integer> set = new HashSet<>();
+
+        //시간복잡도 걸리면 N2 -> 투포인터알고리즘으로. 투포인터할때는 항상 오름차순 정렬되어야.
+//        for(int i=0; i<N; i++) {
+//            for(int j=0; j<N; j++) {
+//                if(strarr1[i].equals(strarr2[j])) {
+//                    set.add(Integer.valueOf(strarr1[i]));
+//                }
+//            }
+//        }
+        //Integer -> String은 i.toString, int -> String은 String.valueof(i)
+//        answer = set.stream().sorted().map(i -> i.toString() + " ").collect(Collectors.joining()).trim();
+
+        int[] intarr1 = Arrays.stream(strarr1).mapToInt(i -> Integer.parseInt(i)).sorted().toArray();
+        int[] intarr2 = Arrays.stream(strarr2).mapToInt(i -> Integer.parseInt(i)).sorted().toArray();
+
+        int i=0;
+        int j=0;
+        while (i<N && j<M) {
+            if(intarr1[i] == intarr2[j]) {
+                set.add(intarr1[i]);
+                i++;
+                j++;
+            }
+            else if(intarr1[i] < intarr2[j]) {
+                i++;
+            }
+            else {
+                j++;
+            }
+        }
+        answer = set.stream().sorted().map(x -> x.toString() + " ").collect(Collectors.joining()).trim();
+
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q3_2 main = new Q3_2();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        int N = Integer.parseInt(sc.nextLine());
+        String strN = sc.nextLine();
+        int M = Integer.parseInt(sc.nextLine());
+        String strM = sc.nextLine();
+        System.out.println(main.solution(N,strN,M,strM));
     }
 
 }

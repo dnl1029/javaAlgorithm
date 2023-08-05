@@ -1,4 +1,8 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Q4_3 {
 
@@ -47,15 +51,39 @@ public class Q4_3 {
      * 3 4 4 3
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str1, String str2) {
+        String answer = "";
+
+        String[] strarr1 = str1.split(" ");
+        int N = Integer.parseInt(strarr1[0]);
+        int M = Integer.parseInt(strarr1[1]);
+
+        String[] strarr = str2.split(" ");
+        int[] intarr = Arrays.stream(strarr).mapToInt(k -> Integer.parseInt(k)).toArray();
+        ArrayList<Integer> list = new ArrayList<>();
+        int x = 0;
+        for(int i=0;i<N-M+1;i++) {
+            HashSet<Integer> tempSet = new HashSet<>();
+            x=i;
+            while (x<M+i) {
+                tempSet.add(intarr[x]);
+                x++;
+            }
+//            int count = (int) tempSet.stream().mapToInt(j -> j.intValue()).count();
+            int count = tempSet.size();
+            tempSet.clear();
+            list.add(count);
+        }
+        answer = list.stream().map(j -> j.toString()+ " ").collect(Collectors.joining()).trim();
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q4_3 main = new Q4_3();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        String str1 = sc.nextLine();
+        String str2 = sc.nextLine();
+        System.out.println(main.solution(str1,str2));
     }
 
 }

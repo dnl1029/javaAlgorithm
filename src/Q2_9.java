@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.OptionalInt;
 import java.util.Scanner;
 
 public class Q2_9 {
@@ -35,15 +38,45 @@ public class Q2_9 {
      * 155
      */
 
-    public int solution(String str, char t) {
+    public int solution(int[][] intarr, int N) {
         int answer = 0;
+        int d1=0;
+        int d2=0;
+
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i=0;i<N;i++) {
+            int rowsum = 0;
+            int colsum = 0;
+            for(int j=0;j<N;j++) {
+                if(i==j) {
+                    d1 += intarr[i][j];
+                }
+                else if(i+j==N-1) {
+                    d2 += intarr[i][j];
+                }
+                rowsum += intarr[i][j];
+                colsum += intarr[j][i];
+            }
+            list.add(rowsum);
+            list.add(colsum);
+        }
+        list.add(d1);
+        list.add(d2);
+        //Integer -> int는 i.intValue, String -> int는 Integer.parseInt(s) 이렇게.
+        OptionalInt max = list.stream().mapToInt(i -> i.intValue()).max();
+        answer = max.getAsInt();
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q2_9 main = new Q2_9();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        int N = Integer.parseInt(sc.nextLine());
+        int[][] intarr = new int[N][N];
+        for(int i=0;i<N;i++) {
+            intarr[i] = Arrays.stream(sc.nextLine().split(" ")).mapToInt(j->Integer.parseInt(j)).toArray();
+        }
+        System.out.println(main.solution(intarr,N));
     }
 
 }

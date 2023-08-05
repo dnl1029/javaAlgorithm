@@ -26,15 +26,38 @@ public class Q2_5 {
      * 8
      */
 
-    public int solution(String str, char t) {
+    public int solution(int N) {
         int answer = 0;
+        //아래는 소수 구하는 2중 for문
+//        for(int i=2;i<N;i++) {
+//            for(int j=2;j<N;j++) {
+//                if(i!=j&&i%j==0) {
+//                    break;
+//                }
+//                if(i==j) {
+//                    answer++;
+//                }
+//            }
+//        }
+
+        //소수구하기는 에라토스테네스체가 가장 빠르다.
+        int[] chars = new int[N+1];
+        for(int i=2; i<=N;i++) {
+            if(chars[i]==0) {
+                answer++;
+                for(int j=i; j<=N;j=j+i) {
+                    chars[j] = 1;
+                }
+            }
+        }
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q2_5 main = new Q2_5();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        int N = sc.nextInt();
+        System.out.println(main.solution(N));
     }
 
 }

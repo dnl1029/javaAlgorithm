@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Q4_2 {
@@ -40,15 +41,41 @@ public class Q4_2 {
      * NO
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str1,String str2) {
+        String answer = "";
+        HashMap<Character,Integer> map1 = new HashMap<>();
+        HashMap<Character,Integer> map2 = new HashMap<>();
+
+        str1.chars().mapToObj(i->(char)i).forEach(j->map1.put(j,map1.getOrDefault(j,0)+1));
+        str2.chars().mapToObj(i->(char)i).forEach(j->map2.put(j,map2.getOrDefault(j,0)+1));
+
+        boolean result = true;
+        for(char x : map1.keySet()){
+            if(!map2.containsKey(x)){
+                result = false;
+                break;
+            }
+            if(!map1.get(x).equals(map2.get(x))) {
+                result = false;
+                break;
+            }
+        }
+        if(result == true) {
+            answer = "YES";
+        }
+        else{
+            answer = "NO";
+        }
+
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q4_2 main = new Q4_2();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        String str1 = sc.nextLine();
+        String str2 = sc.nextLine();
+        System.out.println(main.solution(str1,str2));
     }
 
 }

@@ -1,4 +1,6 @@
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Q2_4 {
 
@@ -26,15 +28,26 @@ public class Q2_4 {
      * 1 1 2 3 5 8 13 21 34 55
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(int N) {
+        String answer = "";
+        int[] intarr = new int[N];
+        intarr[0] = 1;
+        intarr[1] = 1;
+
+        if(N>2) {
+            for(int i=0;i<N-2;i++) {
+                intarr[i+2] = intarr[i+1] + intarr[i];
+            }
+        }
+        answer = Arrays.stream(intarr).mapToObj(i -> String.valueOf(i) + " ").collect(Collectors.joining());
         return answer;
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Q2_4 main = new Q2_4();
         Scanner sc = new Scanner(System.in);
-        System.out.println();
+        int N = sc.nextInt();
+        System.out.println(main.solution(N));
     }
 
 }
