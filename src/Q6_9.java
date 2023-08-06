@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class Q6_9 {
@@ -46,14 +49,16 @@ public class Q6_9 {
      * 17분 용량보다 작은 용량으로는 3개의 DVD에 모든 영상을 녹화할 수 없다.
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str) {
+        String answer = "";
         return answer;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Main main = new Main();
-        Scanner sc = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = br.readLine();
+        br.close();
         System.out.println();
     }
 

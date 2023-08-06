@@ -1,4 +1,8 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Q1_1 {
 
@@ -43,15 +47,15 @@ public class Q1_1 {
         return answer;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Q1_1 main = new Q1_1();
-        Scanner sc = new Scanner(System.in);
 
-        String str = sc.next();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        //sc.next는 string이므로, 문자열(char)를 받으려면 .charAt(0) 해야함.
-        char[] chars = sc.next().toCharArray();
-        char c = chars[0];
+        String str = br.readLine();
+        String str2 = br.readLine();
+        char c = str2.charAt(0);
+
         System.out.println(main.solution(str,c));
     }
 }

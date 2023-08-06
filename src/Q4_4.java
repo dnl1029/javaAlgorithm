@@ -1,4 +1,9 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Q4_4 {
 
@@ -32,15 +37,32 @@ public class Q4_4 {
      * 출력설명: {bac}, {acb}, {cba} 3개의 부분문자열이 "abc"문자열과 아나그램입니다.
      */
 
-    public int solution(String str, char t) {
+    public int solution(String str1, String str2) {
         int answer = 0;
+        int N = str1.length();
+        int M = str2.length();
+        List<Character> compareList = str2.chars().mapToObj(j -> (char) j).sorted().collect(Collectors.toList());
+
+        int count = 0;
+        for(int i=0;i<N-M+1;i++) {
+            List<Character> templist = str1.substring(i, i + M).chars().mapToObj(j -> (char) j).sorted().collect(Collectors.toList());
+            if(templist.equals(compareList)) {
+                count++;
+            }
+        }
+        answer = count;
+
         return answer;
     }
 
-    public static void main(String[] args) {
-        Main main = new Main();
-        Scanner sc = new Scanner(System.in);
-        System.out.println();
+    public static void main(String[] args) throws IOException {
+        Q4_4 main = new Q4_4();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str1 = br.readLine();
+        String str2 = br.readLine();
+        br.close();
+        System.out.println(main.solution(str1,str2));
+
     }
 
 }

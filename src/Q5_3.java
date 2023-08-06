@@ -1,4 +1,10 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Stack;
+import java.util.StringTokenizer;
 
 public class Q5_3 {
 
@@ -79,15 +85,58 @@ public class Q5_3 {
      * 4
      */
 
-    public int solution(String str, char t) {
+    public int solution(int N, String[][] strarr, int M, String[] strarr2) {
         int answer = 0;
+
+        ArrayList<Stack> list = new ArrayList<>();
+        for(int i=0;i<N;i++) {
+            Stack<String> stack = new Stack<>();
+            for(int j=N-1;j>=0;j--) {
+                if(!strarr[j][i].equals("0")){
+                    stack.push(strarr[j][i]);
+                }
+            }
+            list.add(stack);
+        }
+        Stack<String> resultStack = new Stack<>();
+        for(int i=0;i<M;i++) {
+            if(!list.get(Integer.parseInt(strarr2[i]) - 1).isEmpty()){
+                int size = list.get(Integer.parseInt(strarr2[i]) - 1).size();
+                String target = list.get(Integer.parseInt(strarr2[i]) - 1).get(size - 1).toString();
+                if(!resultStack.isEmpty() && resultStack.get(resultStack.size()-1).equals(target)) {
+                    resultStack.pop();
+                    answer = answer + 2;
+                }
+                else {
+                    resultStack.push(target);
+                }
+                list.get(Integer.parseInt(strarr2[i]) - 1).pop();
+            }
+        }
+
         return answer;
     }
 
-    public static void main(String[] args) {
-        Main main = new Main();
-        Scanner sc = new Scanner(System.in);
-        System.out.println();
+    public static void main(String[] args) throws IOException {
+        Q5_3 main = new Q5_3();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        String[][] strarr = new String[N][N];
+
+        for(int i=0; i<N;i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for(int j=0;j<N;j++) {
+                strarr[i][j] = st.nextToken();
+            }
+        }
+        int M = Integer.parseInt(br.readLine());
+        StringTokenizer st2 = new StringTokenizer(br.readLine());
+        String[] strarr2 = new String[M];
+        for(int i=0;i<M;i++) {
+            strarr2[i] = st2.nextToken();
+        }
+        br.close();
+        System.out.println(main.solution(N,strarr,M,strarr2));
     }
 
 }

@@ -1,4 +1,8 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Q4_5 {
 
@@ -31,15 +35,41 @@ public class Q4_5 {
      * 143
      */
 
-    public int solution(String str, char t) {
+    public int solution(String[] strarr, int M, int N) {
         int answer = 0;
+        int[] intarr = Arrays.stream(strarr).mapToInt(i -> Integer.parseInt(i)).toArray();
+        HashSet<Integer> set = new HashSet<>();
+        //조합으로 3개 뽑는거는 3중 for문
+        for(int i=0;i<N;i++) {
+            for(int j=i+1;j<N;j++) {
+                for(int k=j+1;k<N;k++) {
+                    set.add(intarr[i]+intarr[j]+intarr[k]);
+                }
+            }
+        }
+        List<Integer> list = set.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+        answer = list.get(M-1).intValue();
         return answer;
     }
 
-    public static void main(String[] args) {
-        Main main = new Main();
-        Scanner sc = new Scanner(System.in);
-        System.out.println();
+    public static void main(String[] args) throws IOException {
+        Q4_5 main = new Q4_5();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+
+        StringTokenizer st2 = new StringTokenizer(br.readLine());
+        String[] strarr = new String[N];
+
+        int i=0;
+        while (st2.hasMoreTokens()) {
+            strarr[i] = st2.nextToken();
+            i++;
+        }
+
+        br.close();
+        System.out.println(main.solution(strarr,M,N));
     }
 
 }

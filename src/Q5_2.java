@@ -1,4 +1,8 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Q5_2 {
 
@@ -24,15 +28,31 @@ public class Q5_2 {
      * EFLM
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str) {
+        String answer = "";
+
+        Stack<Character> stack = new Stack<>();
+
+        for(int i=0;i<str.length();i++) {
+            if(str.charAt(i)==')') {
+                while (stack.pop() != '(') {}
+            }
+            else {
+                stack.push(str.charAt(i));
+            }
+        }
+        for(int j=0;j<stack.size();j++) {
+            answer += stack.get(j);
+        }
         return answer;
     }
 
-    public static void main(String[] args) {
-        Main main = new Main();
-        Scanner sc = new Scanner(System.in);
-        System.out.println();
+    public static void main(String[] args) throws IOException {
+        Q5_2 main = new Q5_2();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = br.readLine();
+        br.close();
+        System.out.println(main.solution(str));
     }
 
 }

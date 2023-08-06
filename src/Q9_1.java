@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class Q9_1 {
@@ -48,14 +51,16 @@ public class Q9_1 {
      * (183, 65), (180, 70), (170, 72) 가 선발됩니다. (181, 60)은 (183, 65)보다 키와 몸무게 모두 낮기 때문에 탈락이고, (172, 67)은 (180, 70) 때문에 탈락입니다.
      */
 
-    public int solution(String str, char t) {
-        int answer = 0;
+    public String solution(String str) {
+        String answer = "";
         return answer;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Main main = new Main();
-        Scanner sc = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = br.readLine();
+        br.close();
         System.out.println();
     }
 
