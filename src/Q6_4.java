@@ -1,7 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Q6_4 {
 
@@ -44,16 +45,33 @@ public class Q6_4 {
      * 7 5 3 2 6
      */
 
-    public String solution(String str) {
+    public String solution(int[] intarr, int M, int N) {
         String answer = "";
+
+        Stack<Integer> stack = new Stack<>();
+        LinkedList<Integer> list = new LinkedList<>();
+
+        Arrays.stream(intarr).forEach(i->stack.push(i));
+        for(int i=0; i<M; i++) {
+            list.add(stack.pop());
+        }
+        answer = list.stream().map(i->i.toString()+ " ").collect(Collectors.joining()).trim();
+
         return answer;
     }
 
     public static void main(String[] args) throws IOException {
-        Main main = new Main();
+        Q6_4 main = new Q6_4();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str = br.readLine();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int M = Integer.parseInt(st.nextToken());
+        int N = Integer.parseInt(st.nextToken());
+        StringTokenizer st2 = new StringTokenizer(br.readLine());
+        int[] intarr = new int[N];
+        for(int i=0; i<N; i++) {
+            intarr[i] = Integer.parseInt(st2.nextToken());
+        }
         br.close();
-        System.out.println();
+        System.out.println(main.solution(intarr,M,N));
     }
 }

@@ -1,7 +1,11 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Q5_7 {
 
@@ -46,17 +50,46 @@ public class Q5_7 {
      * YES
      */
 
-    public String solution(String str) {
+    public String solution(String str1, String str2) {
         String answer = "";
+
+        HashSet<Character> targetSet = new HashSet<>();
+        Queue<Character> queue = new LinkedList<>();
+        LinkedList<Character> resultList = new LinkedList<>();
+
+        str1.chars().mapToObj(i->(char)i).forEach(j->targetSet.add(j));
+        str2.chars().mapToObj(i->(char)i).forEach(j->queue.offer(j));
+
+        for (int i=0;i<str2.length();i++) {
+            if (targetSet.contains(queue.peek())) {
+                Character temp = queue.poll();
+                resultList.add(temp);
+            }
+            else if(!targetSet.contains(queue.peek())) {
+                queue.poll();
+            }
+            if(resultList.size()==str1.length()) {
+                break;
+            }
+        }
+        String result = resultList.stream().map(j -> j.toString()).collect(Collectors.joining());
+        if(result.equals(str1)){
+            answer = "YES";
+        }
+        else {
+            answer = "NO";
+        }
+
         return answer;
     }
 
     public static void main(String[] args) throws IOException {
-        Main main = new Main();
+        Q5_7 main = new Q5_7();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str = br.readLine();
+        String str1 = br.readLine();
+        String str2 = br.readLine();
         br.close();
-        System.out.println();
+        System.out.println(main.solution(str1,str2));
     }
 
 }

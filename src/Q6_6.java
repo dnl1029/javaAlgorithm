@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
+import java.util.*;
 
 public class Q6_6 {
 
@@ -49,17 +49,43 @@ public class Q6_6 {
      * 출력해설 : 키 정보 152가 철수이고, 127이 철수 짝꿍입니다.
      */
 
-    public String solution(String str) {
+    public String solution(ArrayList list, int N) {
         String answer = "";
+        int targetValue = 152;
+        int targetKey = 0;
+        int swapKey = 0;
+
+        //list 복사하는법
+        ArrayList<Integer> newList = (ArrayList<Integer>)list.clone();
+        Collections.sort(newList);
+        int swap = 0;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i=0; i<N;i++) {
+            if(newList.get(i)!=list.get(i) && map.isEmpty()) {
+                map.put(i,(int)list.get(i));
+                targetKey = i;
+            }
+            else if(newList.get(i)!=list.get(i) && !map.isEmpty()) {
+                map.put(i,(int)list.get(i));
+                swapKey = i;
+            }
+        }
+        answer = String.valueOf(targetKey+1) + " " + String.valueOf(swapKey+1);
+
         return answer;
     }
 
     public static void main(String[] args) throws IOException {
-        Main main = new Main();
+        Q6_6 main = new Q6_6();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str = br.readLine();
+        int N = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i=0;i<N;i++) {
+            list.add(Integer.parseInt(st.nextToken()));
+        }
         br.close();
-        System.out.println();
+        System.out.println(main.solution(list,N));
     }
 
 }

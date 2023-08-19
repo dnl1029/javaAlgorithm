@@ -1,7 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Q6_8 {
 
@@ -32,16 +35,31 @@ public class Q6_8 {
      * 3
      */
 
-    public String solution(String str) {
-        String answer = "";
+    public int solution(ArrayList list, int N, int M) {
+        int answer = 0;
+
+        Collections.sort(list);
+        for(int i=0; i<N; i++) {
+            if((int)list.get(i)==M) {
+                answer = i+1;
+                break;
+            }
+        }
         return answer;
     }
 
     public static void main(String[] args) throws IOException {
-        Main main = new Main();
+        Q6_8 main = new Q6_8();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str = br.readLine();
+        StringTokenizer st1 = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st1.nextToken());
+        int M = Integer.parseInt(st1.nextToken());
+        StringTokenizer st2 = new StringTokenizer(br.readLine());
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i=0;i<N;i++) {
+            list.add(Integer.parseInt(st2.nextToken()));
+        }
         br.close();
-        System.out.println();
+        System.out.println(main.solution(list,N,M));
     }
 }

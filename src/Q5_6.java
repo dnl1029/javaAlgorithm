@@ -1,7 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Q5_6 {
 
@@ -51,17 +54,41 @@ public class Q5_6 {
      * 7
      */
 
-    public String solution(String str) {
-        String answer = "";
+    public int solution(int N,int M) {
+        int answer = 0;
+
+        //Queue는 new LinkedList<>(); 사용해서 생성해야 한다.
+        //queue.offer는 제일 뒤에 넣기, queue.poll은 제일 앞에 삭제, queue.peek 제일 앞에 반환, queue.size, queue.isEmpty,queue.contaions,queue.clear()
+        Queue<Integer> queue = new LinkedList<>();
+        for(int i=0;i<N;i++) {
+            queue.add(i+1);
+        }
+        LinkedList<Integer> list = new LinkedList<>();
+
+        while (queue.size()>=M) {
+            int a = queue.poll().intValue();
+            int b = queue.poll().intValue();
+            int target = queue.poll().intValue();
+            list.add(target);
+            queue.offer(a);
+            queue.offer(b);
+        }
+        while (queue.size() > 0 ) {
+            int temp = queue.poll().intValue();
+            list.add(temp);
+        }
+        answer = list.get(N-1).intValue();
         return answer;
     }
 
     public static void main(String[] args) throws IOException {
-        Main main = new Main();
+        Q5_6 main = new Q5_6();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str = br.readLine();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
         br.close();
-        System.out.println();
+        System.out.println(main.solution(N,M));
     }
 
 }

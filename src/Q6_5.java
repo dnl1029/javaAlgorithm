@@ -1,7 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Q6_5 {
 
@@ -36,17 +39,31 @@ public class Q6_5 {
      * D
      */
 
-    public String solution(String str) {
+    public String solution(ArrayList list, int N) {
         String answer = "";
+
+        HashSet<Integer> set = new HashSet<>();
+        list.stream().mapToInt(i->(int)i).forEach(j->set.add(j));
+        if(set.size()==N) {
+            answer = "U";
+        }
+        else {
+            answer = "D";
+        }
         return answer;
     }
 
     public static void main(String[] args) throws IOException {
-        Main main = new Main();
+        Q6_5 main = new Q6_5();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str = br.readLine();
+        int N = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i=0; i<N; i++) {
+            list.add(Integer.parseInt(st.nextToken()));
+        }
         br.close();
-        System.out.println();
+        System.out.println(main.solution(list,N));
     }
 
 }

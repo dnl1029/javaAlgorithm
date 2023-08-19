@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
+import java.util.*;
 
 public class Q5_8 {
 
@@ -55,17 +55,56 @@ public class Q5_8 {
      * 4
      */
 
-    public String solution(String str) {
-        String answer = "";
+    public int solution(LinkedList list,int N, int M) {
+        int answer = 0;
+        int target = (int) list.get(M);
+
+        Queue<Integer> queue = new LinkedList<>();
+        HashMap<String, Integer> resultMap = new HashMap<>();
+
+        for(int i=0;i<N;i++) {
+            queue.offer((int)list.get(i));
+        }
+        int targetCount = 0;
+        for(int i=0;i<M;i++) {
+            if(list.get(i)==list.get(M)) {
+                targetCount++;
+            }
+        }
+        while (queue.size()>0) {
+            OptionalInt optionalMax = queue.stream().mapToInt(j -> j.intValue()).max();
+            int max = optionalMax.getAsInt();
+            if(queue.peek()!=max) {
+                Integer temp = queue.poll();
+                queue.offer(temp);
+            }
+            else if(queue.peek()==max) {
+                resultMap.put("result",resultMap.getOrDefault("result",0)+1);
+            if(queue.peek()==target) {
+                answer = resultMap.get("result").intValue();
+                answer = answer + targetCount;
+                break;
+            }
+            queue.poll();
+            }
+        }
         return answer;
     }
 
     public static void main(String[] args) throws IOException {
-        Main main = new Main();
+        Q5_8 main = new Q5_8();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str = br.readLine();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+
+        StringTokenizer st2 = new StringTokenizer(br.readLine());
+        LinkedList<Integer> list = new LinkedList<>();
+        while (st2.hasMoreTokens()) {
+            list.add(Integer.parseInt(st2.nextToken()));
+        }
         br.close();
-        System.out.println();
+        System.out.println(main.solution(list,N,M));
     }
 
 }
