@@ -1,10 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.SimpleTimeZone;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class DFSBFS_13 {
 
@@ -50,13 +47,6 @@ public class DFSBFS_13 {
      * sad
      */
 
-//    static int[][] intarr;
-//    static boolean[][] check;
-//    static int N;
-//    static int M;
-//    static int[] dx = {-1, 1, 0, 0};
-//    static int[] dy = {0, 0, -1, 1};
-
     static class Node {
         int x;
         int y;
@@ -68,64 +58,96 @@ public class DFSBFS_13 {
     }
 
 
-    public int bfs(int row, int col, int time) {
+    public String bfs(LinkedList<Node> paramList) {
+        String answer = "";
 
-//        Queue<Node> queue = new LinkedList<>();
-//        check[row][col] = true;
-//        queue.offer(new Node(row, col, time));
-//
-//        int minTime = 0;
-//        while (!queue.isEmpty()) {
-//            Node curNode = queue.poll();
-//
-//            //상하좌우 순서로 이동
-//            for(int j=0; j<4; j++) {
-//                int curRow = curNode.row + dx[j];
-//                int curCol = curNode.col + dy[j];
-//                int curTime = curNode.time;
-//
-//                //범위 초과시 패스
-//                if(curRow<1 || curRow>N || curCol<1 || curCol>M) continue;
-//
-//                //방문한 곳이면 패스
-//                if(check[curRow][curCol]==true) continue;
-//
-//                //특정 값일때 패스
-//                if(intarr[curRow][curCol]==-1) continue;
-//
-//                //이동할 수 있는 조건
-//                if(intarr[curRow][curCol]==0) {
-//                    check[curRow][curCol] = true;
-//                    minTime = curTime+1;
-//                    queue.offer(new Node(curRow,curCol,curTime+1));
-//                }
-//            }
-//        }
-//        return minTime;
+        Queue<Node> queue = new LinkedList<>();
+
+        int listSize = paramList.size();
+
+        Node homeNode = paramList.get(0);
+        Node festNode = paramList.get(listSize - 1);
+
+        boolean[] check = new boolean[listSize];
+        check[0] = true;
+        queue.offer(homeNode);
+        while (!queue.isEmpty()) {
+            Node curNode = queue.poll();
+
+            //도착했으면 break
+            if(check[listSize-1]==true) break;
+
+            for(int j=1; j<listSize; j++) {
+                Node nextNode = paramList.get(j);
+
+                boolean isNext = true;
+                if((nextNode.x<=curNode.x) && (nextNode.y<=curNode.y)) {
+                    isNext = false;
+                }
+
+                //이전으로 돌아가거나 본인 노드일때 패스
+                if(isNext==false) continue;
+
+                int xGap = Math.abs(nextNode.x- curNode.x);
+                int yGap = Math.abs(nextNode.y- curNode.y);
+
+                //방문한 곳이면 패스
+                if(check[j]==true) continue;
+
+                //거리가 1000미터 초과시 패스
+                if(xGap+yGap>1000) continue;
+
+                if(xGap+yGap<=1000) {
+                    check[j] = true;
+                    queue.offer(nextNode);
+                }
+            }
+        }
+
+        if(check[listSize-1]) {
+            answer = "happy";
+        }
+        else {
+            answer = "sad";
+        }
+        return answer;
     }
 
     public static void main(String[] args) throws IOException {
         DFSBFS_13 main = new DFSBFS_13();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+        ArrayList<String> resultList = new ArrayList<>();
+
+
         int T = Integer.parseInt(br.readLine());
         for(int k=1;k<=T;k++) {
+
+            LinkedList<Node> paramList = new LinkedList<>();
             int N = Integer.parseInt(br.readLine());
             StringTokenizer st1 = new StringTokenizer(br.readLine());
             //집 주소
             int homeX = Integer.parseInt(st1.nextToken());
             int homeY = Integer.parseInt(st1.nextToken());
+            paramList.add(new Node(homeX,homeY));
             for(int i=1;i<=N;i++) {
                 StringTokenizer st2 = new StringTokenizer(br.readLine());
                 //편의점 주소들
                 int x = Integer.parseInt(st2.nextToken());
                 int y = Integer.parseInt(st2.nextToken());
+                paramList.add(new Node(x,y));
             }
             //페스티벌 주소
             StringTokenizer st3 = new StringTokenizer(br.readLine());
             int festX = Integer.parseInt(st3.nextToken());
             int festY = Integer.parseInt(st3.nextToken());
-        }
+            paramList.add(new Node(festX,festY));
 
+            String bfsResult = main.bfs(paramList);
+            resultList.add(bfsResult);
+
+        }
+        br.close();
+        resultList.stream().forEach(i-> System.out.println(i));
     }
 }
