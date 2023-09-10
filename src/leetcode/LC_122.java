@@ -51,12 +51,26 @@ public class LC_122 {
 
         int minPrice = prices[0];
         int maxPrice = prices[0];
-
         for(int i=1; i<prices.length; i++) {
-            if(prices[i]<prices[i-1]) {
-                minPrice = prices[i];
+
+            if(prices[i]>prices[i-1]) {
+                maxPrice = prices[i];
+                if(i==prices.length-1) {
+                    result += maxPrice-minPrice;
+                    break;
+                }
             }
-            if(prices[i]>maxPrice) {
+
+            if(prices[i]==prices[i-1]) {
+                if(i==prices.length-1) {
+                    result += maxPrice-minPrice;
+                    break;
+                }
+            }
+
+            else if(prices[i]<prices[i-1]) {
+                result += maxPrice-minPrice;
+                minPrice = prices[i];
                 maxPrice = prices[i];
             }
         }
@@ -66,7 +80,7 @@ public class LC_122 {
 
     public static void main(String[] args) throws IOException {
         LC_122 main = new LC_122();
-        int[] prices = {7,1,5,3,6,4};
+        int[] prices = {1,9,6,9,1,7,1,1,5,9,9,9};
 
         System.out.println(main.maxProfit(prices));
     }
